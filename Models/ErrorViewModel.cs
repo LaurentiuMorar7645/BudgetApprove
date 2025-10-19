@@ -1,4 +1,4 @@
-namespace BudgetApprove.Models;
+namespace BudgetApproved.Models;
 
 public class ErrorViewModel
 {

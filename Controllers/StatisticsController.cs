@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using BudgetApprove.Models;
+using BudgetApproved.Models;
 
 public class StatisticsController : Controller
 {

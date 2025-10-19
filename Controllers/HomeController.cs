@@ -1,31 +1,27 @@
-using System.Diagnostics;
+using BudgetApproved.Services;
 using Microsoft.AspNetCore.Mvc;
-using BudgetApprove.Models;
+// Asigură-te că ai acces la modelul UserModel din proiectul API (cel mai bine, printr-un proiect Shared)
+using BudgetApproved.Models; 
 
-namespace BudgetApprove.Controllers;
-
-public class HomeController : Controller
+namespace BudgetApproved.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        private readonly IHttpClientService _apiClient;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+        // DI funcționează: IHttpClientService este injectat automat
+        public HomeController(IHttpClientService apiClient)
+        {
+            _apiClient = apiClient;
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+        public async Task<IActionResult> Index()
+        {
+            var users = await _apiClient.GetAsync<UserModel>("api/Users");
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            // Trimite utilizatorii către View
+            return View(users);
+        }
     }
 }
+
